@@ -42,8 +42,7 @@ export default {
     dir: 'public',
   },
   plugins: [
-    css(
-    ),
+    production && css(),
     html({
       title: 'MASSIVE-PASS',
       meta: [
@@ -52,10 +51,7 @@ export default {
           name: 'viewport',
           content: 'width=device-width,initial-scale=1'
         },
-        {
-          'http-equiv': "Content-Security-Policy",
-          content: `default-src ; script-src 'self' ${production ? '' : 'http://127.0.0.1:35729'}; style-src 'self'; ${production ? '' : 'connect-src ws://127.0.0.1:35729 ;'}`
-        },
+
         {
           name: 'description',
           content: 'a completely unnecessary password generator'
@@ -64,14 +60,19 @@ export default {
           name: 'author',
           content: 'simon, simon@ramsay.xyz'
         }
-      ],
+      ].concat(production ? {
+        'http-equiv': "Content-Security-Policy",
+        content: `default-src ; script-src 'self'; style-src 'self';`
+      } : undefined),
 
     }),
-    sri({
+    production && sri({
       algorithms: ['sha512'],
     }),
 
     svelte({
+      emitCss: production,
+
       preprocess: sveltePreprocess({ sourceMap: !production }),
       compilerOptions: {
 

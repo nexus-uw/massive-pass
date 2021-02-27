@@ -4,11 +4,12 @@
   export let includeSpecial: boolean = true
   export let showPassword = false
 
-  const js_sha = document.querySelectorAll('script[crossOrigin="anonymous"]')[0].integrity
+  const js_sha = document.querySelectorAll('script[crossOrigin="anonymous"]')[0]?.integrity || 'DEV_MODE'
 
   const CHARACTERS = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789'.split('')
   const SPECIAL = `\`~!@#$%^&*()-_+={[}};:'",<.>/?\\|`.split('')
 
+  let copyText = 'copy to clipboard'
   function generate() {
     let p = ''
     let chars = [...CHARACTERS]
@@ -22,6 +23,8 @@
 
   async function copy() {
     await navigator.clipboard.writeText(pass)
+    copyText = 'copied'
+    setTimeout(() => (copyText = 'click to copy again'), 2500)
   }
 
   function toggleShowPass() {
@@ -34,10 +37,12 @@
   <h3>an unspecial password generator</h3>
   {#if !!pass}
     <div class={showPassword ? '' : 'disable-text-selection'}>
-      password: <pre>{showPassword ? pass : Array(length).fill('*').join('')}</pre>
+      password: <div class="password">{showPassword ? pass : Array(length).fill('*').join('')}</div>
     </div>
-    <button class="fity" on:click={copy}>copy to clipboard</button>
-    <button class="fity" on:click={toggleShowPass}>{showPassword ? 'hide' : 'show'} password</button>
+    <div class="row">
+      <button class="fity foobar" on:click={copy}>{copyText}</button>
+      <button class="fity" on:click={toggleShowPass}>{showPassword ? 'hide' : 'show'} password</button>
+    </div>
   {:else}
     click generate
   {/if}
@@ -46,23 +51,58 @@
     <label> include specials? <input type="checkbox" bind:checked={includeSpecial} /></label>
   </div>
   <div>
-    <button on:click={generate}>generate</button>
+    <button class="generate" on:click={generate}>generate</button>
   </div>
-  <footer>
-    JS SHA {js_sha} | yet another project by <a href="https://ramsay.xyz">SIMON RAMSAY</a> |
-    <a href="https://github.com/nexus-uw/massive-pass">CODE</a> |
-    2021 - CURRENT YEAR <a href="https://unlicense.org/">UNLICENSE</a>
-  </footer>
 </main>
 
+<footer>
+  <hr />
+  <div>JS SHA {js_sha}</div>
+  <div>
+    <a href="TODO">TOR</a> | yet another project by <a href="https://ramsay.xyz">SIMON RAMSAY</a> |
+    <a href="https://github.com/nexus-uw/massive-pass">CODE</a> | 2021 - CURRENT YEAR
+    <a href="https://unlicense.org/">UNLICENSE</a>
+  </div>
+</footer>
+
 <style>
+  .password {
+    word-wrap: normal;
+    word-break: break-all;
+  }
+  a {
+    color: pink;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  button {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: greenyellow;
+    background-color: black;
+    font-size: 1.12rem;
+  }
+  .row {
+    display: flex;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+  .foobar {
+    margin-right: 7rem;
+  }
   main {
     text-align: center;
     padding: 1em;
-    max-width: 240px;
     margin: 0 auto;
+
+    min-height: 100%;
+
+    /* Equal to height of footer */
+    /* But also accounting for potential margin-bottom of last child */
+    /* margin-bottom: -120px; */
   }
 
+  .generate {
+    margin-top: 2.5rem;
+  }
   .title {
     color: #ff3e00;
     text-transform: uppercase;
@@ -101,15 +141,15 @@
   }
 
   footer {
-    position: absolute;
+    /* position: absolute;
     left: 0;
     bottom: 0;
-    height: 100px;
+    height: 120px;
     width: 100%;
     color: #ffffff;
     background: #06303a;
-    font-size: 0.5em;
+    font-size: 0.666em;
     text-align: center;
-    line-height: 100px;
+    line-height: 50px; */
   }
 </style>
