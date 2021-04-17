@@ -1,34 +1,34 @@
 <script lang="ts">
-  export let pass: string = undefined
-  export let length: number = 53
-  export let includeSpecial: boolean = true
-  export let showPassword = false
+  export let pass: string = undefined;
+  export let length: number = 53;
+  export let includeSpecial: boolean = true;
+  export let showPassword = false;
 
-  const js_sha = document.querySelectorAll('script[crossOrigin="anonymous"]')[0]?.integrity || 'DEV_MODE'
+  const js_sha = document.querySelectorAll('script[crossOrigin="anonymous"]')[0]?.integrity || "DEV_MODE";
 
-  const CHARACTERS = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789'.split('')
-  const SPECIAL = `\`~!@#$%^&*()-_+={[}};:'",<.>/?\\|`.split('')
+  const CHARACTERS = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789".split("");
+  const SPECIAL = `\`~!@#$%^&*()-_+={[}};:'",<.>/?\\|`.split("");
 
-  let copyText = 'copy to clipboard'
+  let copyText = "copy to clipboard";
   function generate() {
-    let p = ''
-    let chars = [...CHARACTERS]
+    let p = "";
+    let chars = [...CHARACTERS];
     if (includeSpecial) {
-      chars = chars.concat(SPECIAL)
+      chars = chars.concat(SPECIAL);
     }
-    const array = new Uint32Array(length)
-    window.crypto.getRandomValues(array)
-    pass = array.reduce((p, rando) => p + chars[rando % chars.length], '')
+    const array = new Uint32Array(length);
+    window.crypto.getRandomValues(array);
+    pass = array.reduce((p, rando) => p + chars[rando % chars.length], "");
   }
 
   async function copy() {
-    await navigator.clipboard.writeText(pass)
-    copyText = 'copied'
-    setTimeout(() => (copyText = 'click to copy again'), 2500)
+    await navigator.clipboard.writeText(pass);
+    copyText = "copied";
+    setTimeout(() => (copyText = "click to copy again"), 2500);
   }
 
   function toggleShowPass() {
-    showPassword = !showPassword
+    showPassword = !showPassword;
   }
 </script>
 
@@ -36,12 +36,12 @@
   <h1 class="title">MASSIVE PASS</h1>
   <h3>an unspecial password generator</h3>
   {#if !!pass}
-    <div class={showPassword ? '' : 'disable-text-selection'}>
-      password: <div class="password">{showPassword ? pass : Array(length).fill('*').join('')}</div>
+    <div class={showPassword ? "" : "disable-text-selection"}>
+      password: <div class="password">{showPassword ? pass : Array(length).fill("*").join("")}</div>
     </div>
     <div class="row">
       <button class="fity foobar" on:click={copy}>{copyText}</button>
-      <button class="fity" on:click={toggleShowPass}>{showPassword ? 'hide' : 'show'} password</button>
+      <button class="fity" on:click={toggleShowPass}>{showPassword ? "hide" : "show"} password</button>
     </div>
   {:else}
     click generate
@@ -58,7 +58,7 @@
 <footer>
   <hr />
   <div>JS SHA {js_sha}</div>
-  <div>
+  <div class="footer_links">
     <a href="TODO">TOR</a> | yet another project by <a href="https://ramsay.xyz">SIMON RAMSAY</a> |
     <a href="https://github.com/nexus-uw/massive-pass">CODE</a> | 2021 - CURRENT YEAR
     <a href="https://unlicense.org/">UNLICENSE</a>
@@ -72,10 +72,10 @@
   }
   a {
     color: pink;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
   }
   button {
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande", "Lucida Sans", Arial, sans-serif;
     color: greenyellow;
     background-color: black;
     font-size: 1.12rem;
@@ -151,5 +151,9 @@
     font-size: 0.666em;
     text-align: center;
     line-height: 50px; */
+  }
+  .footer_links {
+    display: flex;
+    justify-content: center;
   }
 </style>
