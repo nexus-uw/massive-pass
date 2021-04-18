@@ -59,7 +59,7 @@
   <hr />
   <div>JS SHA {js_sha}</div>
   <div class="footer_links">
-    <a href="TODO">TOR</a> | yet another project by <a href="https://ramsay.xyz">SIMON RAMSAY</a> |
+    <a href="http://massiveeeati5xv7sszovagrkamzdtshv4sg4rzpbg6n2btwkv2f2lqd.onion/">TOR</a> | yet another project by <a href="https://ramsay.xyz">SIMON RAMSAY</a> |
     <a href="https://github.com/nexus-uw/massive-pass">CODE</a> | 2021 - CURRENT YEAR
     <a href="https://unlicense.org/">UNLICENSE</a>
   </div>
