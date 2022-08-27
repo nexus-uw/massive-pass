@@ -7,7 +7,7 @@
 ```npm run dev ```
 
 # why
-see blog post <TODO>
+[see blog post](https://ramsay.xyz/2021/04/17/massive-pass.html)
 
 ## todo
 - explain script integ
