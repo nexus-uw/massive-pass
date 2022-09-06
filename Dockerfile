@@ -8,5 +8,6 @@ RUN npm ci
 COPY . /build
 RUN npm run build
 
-FROM nginx:alpine
-COPY --from=build /build/public  /usr/share/nginx/html
+FROM ghcr.io/nexus-uw/darkhttpd:master
+EXPOSE 80
+COPY --from=BUILD /build/public /var/www/htdocs
