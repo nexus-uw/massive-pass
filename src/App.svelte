@@ -1,7 +1,7 @@
 <script lang="ts">
   export let pass: string = undefined;
   export let length: number = 53;
-  export let includeSpecial: boolean = true;
+  export let includeSpecial: boolean = false;
   export let showPassword = false;
 
   const js_sha = document.querySelectorAll('script[crossOrigin="anonymous"]')[0]?.integrity || "DEV_MODE";
